@@ -1,7 +1,8 @@
 module SpatialAdapter
   class Railtie < Rails::Railtie
     initializer "spatial_adapter.load_current_database_adapter" do
-      adapter = ActiveRecord::Base.configurations[Rails.env]['adapter']
+      # Get the configuration from the correct manner
+      adapter = Rails.configuration.database_configuration[Rails.env]['adapter'] #ActiveRecord::Base.configurations[Rails.env]['adapter']
       begin
         require "spatial_adapter/#{adapter}"
       rescue LoadError
